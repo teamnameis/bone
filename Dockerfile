@@ -11,8 +11,6 @@ RUN git clone https://github.com/ildoonet/tf-pose-estimation && \
 
 RUN pip install flask
 
-EXPOSE 5000
-
 COPY server.py .
 
 CMD [ "python", "server.py" ]
