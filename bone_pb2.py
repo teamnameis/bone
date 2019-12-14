@@ -17,31 +17,31 @@ _sym_db = _symbol_database.Default()
 
 DESCRIPTOR = _descriptor.FileDescriptor(
   name='bone.proto',
-  package='be',
+  package='bone',
   syntax='proto3',
   serialized_options=_b('\n\023org.teamnameis.boneB\005MorphP\001Z\004bone'),
-  serialized_pb=_b('\n\nbone.proto\x12\x02\x62\x65\"!\n\x05\x46lame\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\"\x15\n\x05Image\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\x32%\n\x02ML\x12\x1f\n\x05Morph\x12\t.be.Flame\x1a\t.be.Image\"\x00\x42$\n\x13org.teamnameis.boneB\x05MorphP\x01Z\x04\x62oneb\x06proto3')
+  serialized_pb=_b('\n\nbone.proto\x12\x04\x62one\"!\n\x05\x46rame\x12\n\n\x02id\x18\x01 \x01(\x05\x12\x0c\n\x04\x64\x61ta\x18\x02 \x01(\x0c\"\x15\n\x05Image\x12\x0c\n\x04\x64\x61ta\x18\x01 \x01(\x0c\x32)\n\x02ML\x12#\n\x05Morph\x12\x0b.bone.Frame\x1a\x0b.bone.Image\"\x00\x42$\n\x13org.teamnameis.boneB\x05MorphP\x01Z\x04\x62oneb\x06proto3')
 )
 
 
 
 
-_FLAME = _descriptor.Descriptor(
-  name='Flame',
-  full_name='be.Flame',
+_FRAME = _descriptor.Descriptor(
+  name='Frame',
+  full_name='bone.Frame',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='id', full_name='be.Flame.id', index=0,
+      name='id', full_name='bone.Frame.id', index=0,
       number=1, type=5, cpp_type=1, label=1,
       has_default_value=False, default_value=0,
       message_type=None, enum_type=None, containing_type=None,
       is_extension=False, extension_scope=None,
       serialized_options=None, file=DESCRIPTOR),
     _descriptor.FieldDescriptor(
-      name='data', full_name='be.Flame.data', index=1,
+      name='data', full_name='bone.Frame.data', index=1,
       number=2, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
@@ -59,20 +59,20 @@ _FLAME = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=18,
-  serialized_end=51,
+  serialized_start=20,
+  serialized_end=53,
 )
 
 
 _IMAGE = _descriptor.Descriptor(
   name='Image',
-  full_name='be.Image',
+  full_name='bone.Image',
   filename=None,
   file=DESCRIPTOR,
   containing_type=None,
   fields=[
     _descriptor.FieldDescriptor(
-      name='data', full_name='be.Image.data', index=0,
+      name='data', full_name='bone.Image.data', index=0,
       number=1, type=12, cpp_type=9, label=1,
       has_default_value=False, default_value=_b(""),
       message_type=None, enum_type=None, containing_type=None,
@@ -90,25 +90,25 @@ _IMAGE = _descriptor.Descriptor(
   extension_ranges=[],
   oneofs=[
   ],
-  serialized_start=53,
-  serialized_end=74,
+  serialized_start=55,
+  serialized_end=76,
 )
 
-DESCRIPTOR.message_types_by_name['Flame'] = _FLAME
+DESCRIPTOR.message_types_by_name['Frame'] = _FRAME
 DESCRIPTOR.message_types_by_name['Image'] = _IMAGE
 _sym_db.RegisterFileDescriptor(DESCRIPTOR)
 
-Flame = _reflection.GeneratedProtocolMessageType('Flame', (_message.Message,), {
-  'DESCRIPTOR' : _FLAME,
+Frame = _reflection.GeneratedProtocolMessageType('Frame', (_message.Message,), {
+  'DESCRIPTOR' : _FRAME,
   '__module__' : 'bone_pb2'
-  # @@protoc_insertion_point(class_scope:be.Flame)
+  # @@protoc_insertion_point(class_scope:bone.Frame)
   })
-_sym_db.RegisterMessage(Flame)
+_sym_db.RegisterMessage(Frame)
 
 Image = _reflection.GeneratedProtocolMessageType('Image', (_message.Message,), {
   'DESCRIPTOR' : _IMAGE,
   '__module__' : 'bone_pb2'
-  # @@protoc_insertion_point(class_scope:be.Image)
+  # @@protoc_insertion_point(class_scope:bone.Image)
   })
 _sym_db.RegisterMessage(Image)
 
@@ -117,19 +117,19 @@ DESCRIPTOR._options = None
 
 _ML = _descriptor.ServiceDescriptor(
   name='ML',
-  full_name='be.ML',
+  full_name='bone.ML',
   file=DESCRIPTOR,
   index=0,
   serialized_options=None,
-  serialized_start=76,
-  serialized_end=113,
+  serialized_start=78,
+  serialized_end=119,
   methods=[
   _descriptor.MethodDescriptor(
     name='Morph',
-    full_name='be.ML.Morph',
+    full_name='bone.ML.Morph',
     index=0,
     containing_service=None,
-    input_type=_FLAME,
+    input_type=_FRAME,
     output_type=_IMAGE,
     serialized_options=None,
   ),

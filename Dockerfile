@@ -9,6 +9,8 @@ RUN git clone https://github.com/ildoonet/tf-pose-estimation && \
     pip install -r requirements.txt && \
     python setup.py install
 
+WORKDIR /bone
+
 COPY kimono.pickle .
 COPY *.py ./
 

@@ -15,8 +15,8 @@ class MLStub(object):
       channel: A grpc.Channel.
     """
     self.Morph = channel.unary_unary(
-        '/be.ML/Morph',
-        request_serializer=bone__pb2.Flame.SerializeToString,
+        '/bone.ML/Morph',
+        request_serializer=bone__pb2.Frame.SerializeToString,
         response_deserializer=bone__pb2.Image.FromString,
         )
 
@@ -37,10 +37,10 @@ def add_MLServicer_to_server(servicer, server):
   rpc_method_handlers = {
       'Morph': grpc.unary_unary_rpc_method_handler(
           servicer.Morph,
-          request_deserializer=bone__pb2.Flame.FromString,
+          request_deserializer=bone__pb2.Frame.FromString,
           response_serializer=bone__pb2.Image.SerializeToString,
       ),
   }
   generic_handler = grpc.method_handlers_generic_handler(
-      'be.ML', rpc_method_handlers)
+      'bone.ML', rpc_method_handlers)
   server.add_generic_rpc_handlers((generic_handler,))

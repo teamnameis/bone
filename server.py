@@ -10,6 +10,7 @@ from tf_pose.estimator import TfPoseEstimator
 
 
 def overlay_kimono(src_image, dst_image, src_point, dst_point):
+    # skelton
     return src_image
 
 
@@ -26,7 +27,6 @@ class Servicer(MLServicer):
         humans = estimater.run(human_img)
         human_point = Estimater.shape(humans)
         image = overlay_kimono(kimono_img, human_img, kimono_point, human_point)
-        # image = TfPoseEstimator.draw_humans(img, humans, imgcopy=False)
         _, morphed = cv2.imencode('.jpg', image)
         return Image(data=morphed.tobytes())
 

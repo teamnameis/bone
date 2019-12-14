@@ -39,14 +39,8 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     e = Estimater(size=args.size, model=args.model)
-    bones = []
     for img in args.img:
-        print(img)
         src_img = cv2.imread(img)
         humans = e.run(src_img)
-        bone = Estimater.shape(humans)
-        bones.append({'img': src_img, 'points': bone})
-
-    import pickle
-    with open('/bone/kimono.pickle', 'wb') as f:
-        pickle.dump(bones, f)
+        dst_img = TfPoseEstimator.draw_humans(src_img, humans, imgcopy=False)
+        cv2.imwrite(f'{img}_bone.png', dst_img)

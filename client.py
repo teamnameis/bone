@@ -10,7 +10,7 @@ def main(imgs):
 
         for img in imgs:
             with open(img, 'rb') as input:
-                morphed = stub.Morph(Flame(id=1, data=input.read()))
+                morphed = stub.Morph(Frame(id=1, data=input.read()))
                 with open(f'{img}_bone.png', 'wb') as output:
                     output.write(morphed.data)
 
