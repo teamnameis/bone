@@ -1,6 +1,6 @@
 syntax = "proto3";
 
-package be;
+package bone;
 
 option go_package = "bone";
 option java_multiple_files = true;
@@ -8,10 +8,10 @@ option java_package = "org.teamnameis.bone";
 option java_outer_classname = "Morph";
 
 service ML {
-  rpc Morph(Flame) returns (Image) {}
+  rpc Morph(Frame) returns (Image) {}
 }
 
-message Flame {
+message Frame {
   int32 id = 1;
   bytes data = 2;
 }
