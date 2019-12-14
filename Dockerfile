@@ -9,8 +9,7 @@ RUN git clone https://github.com/ildoonet/tf-pose-estimation && \
     pip install -r requirements.txt && \
     python setup.py install
 
-RUN pip install flask
-
-COPY server.py .
+COPY kimono.pickle .
+COPY *.py ./
 
 CMD [ "python", "server.py" ]

@@ -1,42 +1,58 @@
-import argparse
-from flask import Flask, request, jsonify
+from bone_pb2 import *
+from bone_pb2_grpc import MLServicer, add_MLServicer_to_server
 import cv2
 import numpy as np
+from estimater import Estimater
+import grpc
+from concurrent import futures
+import time
 from tf_pose.estimator import TfPoseEstimator
-from tf_pose.networks import get_graph_path, model_wh
 
 
-app = Flask(__name__)
-w, h = model_wh('432x368')
-if w == 0 or h == 0:
-    e = TfPoseEstimator(get_graph_path('mobilenet_thin'), target_size=(432, 368))
-else:
-    e = TfPoseEstimator(get_graph_path('mobilenet_thin'), target_size=(w, h))
+def overlay_kimono(src_image, dst_image, src_point, dst_point):
+    return src_image
 
 
-@app.route("/", methods=['POST'])
-def bone():
-    if request.files['image']:
-        st = request.files['image'].stream
-        img_array = np.asarray(bytearray(st.read()), dtype=np.uint8)
-        img = cv2.imdecode(img_array, 1)
-        humans = e.inference(img, resize_to_default=(w > 0 and h > 0), upsample_size=4.0)
-        resp = []
-        for human in humans:
-            bone = []
-            for i in range(0, 18):
-                body_parts = human.body_parts
-                if i in body_parts:
-                    bone.append({"x": body_parts[i].x, "y": body_parts[i].y, "score":body_parts[i].score})
-                else:
-                    bone.append({"x": -1, "y": -1, "score": -1})
-            resp.append(bone)
-        return jsonify(resp)
+class Servicer(MLServicer):
+    def __init__(self, estimater, kimono):
+        self.e = estimater
+        self.kimono = kimono
+
+    def Morph(self, request, context):
+        kimono = self.kimono[request.id]
+        kimono_img, kimono_point = kimono['img'], kimono['points'][0]
+        human_array = np.asarray(bytearray(request.data), dtype=np.uint8)
+        human_img = cv2.imdecode(human_array, 1)
+        humans = estimater.run(human_img)
+        human_point = Estimater.shape(humans)
+        image = overlay_kimono(kimono_img, human_img, kimono_point, human_point)
+        # image = TfPoseEstimator.draw_humans(img, humans, imgcopy=False)
+        _, morphed = cv2.imencode('.jpg', image)
+        return Image(data=morphed.tobytes())
+
+
+def serve(estimater, kimono, port):
+    server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
+    add_MLServicer_to_server(Servicer(estimater, kimono), server)
+    server.add_insecure_port(f'[::]:{port}')
+    server.start()
+    try:
+        while True:
+            time.sleep(1)
+    except KeyboardInterrupt:
+        server.stop(0)
 
 
 if __name__ == '__main__':
+    import argparse
     parser = argparse.ArgumentParser()
     parser.add_argument('--port', type=int, default=5000)
+    parser.add_argument('--size', type=str, default='432x368')
+    parser.add_argument('--model', type=str, default='mobilenet_thin')
     args = parser.parse_args()
 
-    app.run(port=args.port)
+    import pickle
+    with open('kimono.pickle', 'rb') as f:
+        kimono = pickle.load(f)
+        estimater = Estimater(size=args.size, model=args.model)
+        serve(estimater, kimono, args.port)
