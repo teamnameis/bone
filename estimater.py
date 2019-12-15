@@ -23,9 +23,11 @@ class Estimater:
             for i in range(0, 18):
                 body_parts = human.body_parts
                 if i in body_parts:
-                    bone.append({"x": body_parts[i].x, "y": body_parts[i].y, "score":body_parts[i].score})
+                    #bone.append({"x": body_parts[i].x, "y": body_parts[i].y, "score":body_parts[i].score})
+                    bone.append((body_parts[i].x, body_parts[i].y, body_parts[i].score))
                 else:
-                    bone.append({"x": -1, "y": -1, "score": -1})
+                    #bone.append({"x": -1, "y": -1, "score": -1})
+                    bone.append((-1, -1, -1))
             resp.append(bone)
         return resp
 

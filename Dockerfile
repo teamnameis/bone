@@ -11,6 +11,8 @@ RUN git clone https://github.com/ildoonet/tf-pose-estimation && \
 
 WORKDIR /bone
 
+RUN git clone https://github.com/teamnameis/ml
+
 COPY kimono.pickle .
 COPY *.py ./
 
