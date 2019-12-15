@@ -23,8 +23,11 @@ class Servicer(MLServicer):
         human_img = cv2.imdecode(human_array, 1)
         humans = estimater.run(human_img)
         human_points = Estimater.shape(humans)
-        human_point = human_points[0]
-        image = overlay_kimono(kimono_img, human_img, kimono_point, human_point)
+        if len(human_points) == 0:
+            image = np.zeros((1, 1, 4)) 
+        else:
+            human_point = human_points[0]
+            image = overlay_kimono(kimono_img, human_img, kimono_point, human_point)
         _, morphed = cv2.imencode('.png', image)
         return Image(data=morphed.tobytes())
 
