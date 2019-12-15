@@ -25,7 +25,7 @@ class Servicer(MLServicer):
         human_points = Estimater.shape(humans)
         human_point = human_points[0]
         image = overlay_kimono(kimono_img, human_img, kimono_point, human_point)
-        _, morphed = cv2.imencode('.jpg', image)
+        _, morphed = cv2.imencode('.png', image)
         return Image(data=morphed.tobytes())
 
 
