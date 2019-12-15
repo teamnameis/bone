@@ -14,7 +14,6 @@ class Servicer(MLServicer):
     def __init__(self, estimater, kimono):
         self.e = estimater
         self.kimono = kimono
-        
 
     def Morph(self, request, context):
         kimono = self.kimono[request.id]
